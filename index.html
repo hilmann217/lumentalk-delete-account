@@ -24,6 +24,8 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.1);
       padding: 2.5rem;
       text-align: center;
+      position: relative;
+      overflow: visible;
     }
     .logo {
       font-size: 1.5rem;
@@ -48,21 +50,22 @@
     ul li {
       margin-bottom: 0.5rem;
     }
-    a.button {
-      display: inline-block;
+    button.copy-btn {
       background-color: #f5a623;
       color: #fff;
-      text-decoration: none;
+      border: none;
       padding: 0.75rem 1.5rem;
       border-radius: 8px;
+      font-size: 1rem;
       font-weight: 600;
+      cursor: pointer;
       transition: background-color 0.2s ease, transform 0.1s ease;
     }
-    a.button:hover {
+    button.copy-btn:hover {
       background-color: #d48806;
       transform: translateY(-1px);
     }
-    a.button:active {
+    button.copy-btn:active {
       transform: translateY(0);
     }
     .note {
@@ -75,6 +78,28 @@
       font-size: 0.8rem;
       color: #999;
     }
+    /* Toast */
+    .toast {
+      visibility: hidden;
+      min-width: 160px;
+      margin-left: -80px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 4px;
+      padding: 0.75rem;
+      position: absolute;
+      left: 50%;
+      bottom: 1rem;
+      font-size: 0.9rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0.3s;
+    }
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -82,13 +107,10 @@
     <div class="logo">HillForge</div>
     <h1>Delete Your LumenTalk Account</h1>
     <p>
-      We’re sorry to see you go! To permanently delete your account and all associated data, simply click the button below or email us:
+      We’re sorry to see you go! To permanently delete your account and all associated data, simply click the button below to copy our email address, then paste it into your mail client and send us a request.
     </p>
     <p>
-      <a class="button"
-         href="mailto:hillmanmd@gmail.com?subject=Delete%20My%20LumenTalk%20Account">
-        Email hillmanmd@gmail.com
-      </a>
+      <button class="copy-btn" onclick="copyEmail()">Copy Email Address</button>
     </p>
     <h2>What We Delete</h2>
     <ul>
@@ -103,8 +125,23 @@
     <footer>
       © 2025 HillForge — Crafting illuminating AI experiences.
     </footer>
+    <div id="toast" class="toast">Email copied!</div>
   </div>
+
+  <script>
+    function copyEmail() {
+      const email = 'hillmanmd@gmail.com';
+      navigator.clipboard.writeText(email).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      }).catch(err => {
+        alert('Failed to copy email. Please copy manually: ' + email);
+      });
+    }
+  </script>
 </body>
 </html>
+
 
 
