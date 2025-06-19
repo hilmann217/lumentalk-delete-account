@@ -5,126 +5,167 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Delete Your LumenTalk Account | HillForge</title>
   <style>
+    :root {
+      --primary: #f5a623;
+      --primary-dark: #d48806;
+      --bg-start: #eef2f8;
+      --bg-end: #e2e8f0;
+      --text-dark: #2a2a2a;
+      --text-muted: #666;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, #f0f2f5 0%, #ffffff 100%);
-      color: #333;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       padding: 1rem;
+      overflow: hidden;
     }
+    /* Card with fade‐in and lift */
     .card {
       background: #fff;
-      max-width: 480px;
+      max-width: 500px;
       width: 100%;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      padding: 3rem;
       text-align: center;
       position: relative;
-      overflow: visible;
+      transform: translateY(40px);
+      opacity: 0;
+      animation: slideUp 0.8s ease-out forwards;
     }
+    @keyframes slideUp {
+      to { transform: translateY(0); opacity: 1; }
+    }
+    /* HillForge logo + icon */
     .logo {
-      font-size: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      font-size: 1.6rem;
       font-weight: bold;
-      color: #f5a623;
-      margin-bottom: 1rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    .logo svg {
+      width: 32px;
+      height: 32px;
+      margin-right: 0.5rem;
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
     }
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.9rem;
       margin-bottom: 1rem;
-      color: #2a2a2a;
+      color: var(--text-dark);
     }
     p {
+      font-size: 1rem;
       line-height: 1.6;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-dark);
     }
-    ul {
-      text-align: left;
-      margin: 1rem 0 1.5rem 0;
-      padding-left: 1.25rem;
-    }
-    ul li {
-      margin-bottom: 0.5rem;
-    }
+    /* Button */
     button.copy-btn {
-      background-color: #f5a623;
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark));
       color: #fff;
       border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
+      padding: 0.85rem 2rem;
+      border-radius: 12px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      box-shadow: 0 8px 20px rgba(245,166,35,0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     button.copy-btn:hover {
-      background-color: #d48806;
-      transform: translateY(-1px);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(245,166,35,0.5);
     }
     button.copy-btn:active {
-      transform: translateY(0);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(245,166,35,0.4);
     }
-    .note {
-      font-size: 0.85rem;
-      color: #666;
-      margin-top: 1.5rem;
+    /* Styled list with icons */
+    ul {
+      list-style: none;
+      text-align: left;
+      margin: 2rem 0;
     }
-    footer {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: #999;
+    ul li {
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+      font-size: 1rem;
+    }
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      mask: url('data:image/svg+xml,\
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">\
+        <path fill="white" d="M9 16.2l-3.5-3.5L4 14l5 5 12-12-1.5-1.5L9 16.2z"/>\
+        </svg>') no-repeat center;
+      mask-size: contain;
     }
     /* Toast */
     .toast {
-      visibility: hidden;
-      min-width: 160px;
-      margin-left: -80px;
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      border-radius: 4px;
-      padding: 0.75rem;
       position: absolute;
       left: 50%;
-      bottom: 1rem;
-      font-size: 0.9rem;
+      bottom: -60px;
+      transform: translateX(-50%);
+      background: var(--text-dark);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
       opacity: 0;
+      transition: bottom 0.4s ease, opacity 0.4s ease;
       pointer-events: none;
-      transition: opacity 0.3s ease, visibility 0.3s;
+      font-size: 0.9rem;
     }
     .toast.show {
-      visibility: visible;
+      bottom: 1rem;
       opacity: 1;
+    }
+    /* Footer */
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="logo">HillForge</div>
+    <div class="logo">
+      <!-- Inline chat‐bubble SVG -->
+      <svg viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20 36l6-6 16 16" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      HillForge
+    </div>
     <h1>Delete Your LumenTalk Account</h1>
     <p>
-      We’re sorry to see you go! To permanently delete your account and all associated data, simply click the button below to copy our email address, then paste it into your mail client and send us a request.
+      We’re sorry to see you go! Click below to copy our support email—then paste into your mail client to request permanent deletion.
     </p>
-    <p>
-      <button class="copy-btn" onclick="copyEmail()">Copy Email Address</button>
-    </p>
-    <h2>What We Delete</h2>
+    <button class="copy-btn" onclick="copyEmail()">Copy Email Address</button>
+
     <ul>
-      <li>Your user profile (email, display name)</li>
-      <li>All chat history stored locally in SQLite</li>
+      <li>Your user profile (email & display name)</li>
+      <li>All chat history stored locally</li>
       <li>Any uploaded images</li>
     </ul>
-    <p><strong>Processing time:</strong> within 7 days of your request.</p>
-    <p class="note">
-      Once deleted, this action cannot be undone. Please make sure you’ve backed up any data you’d like to keep.
-    </p>
-    <footer>
-      © 2025 HillForge — Crafting illuminating AI experiences.
-    </footer>
+
+    <footer>© 2025 HillForge — Forging tomorrow’s digital frontiers.</footer>
+
     <div id="toast" class="toast">Email copied!</div>
   </div>
 
@@ -132,16 +173,13 @@
     function copyEmail() {
       const email = 'hillmanmd@gmail.com';
       navigator.clipboard.writeText(email).then(() => {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
-      }).catch(err => {
-        alert('Failed to copy email. Please copy manually: ' + email);
+        const t = document.getElementById('toast');
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2000);
+      }).catch(() => {
+        alert('Failed to copy—please copy manually: ' + email);
       });
     }
   </script>
 </body>
 </html>
-
-
-
